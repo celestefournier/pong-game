@@ -1,36 +1,49 @@
 ﻿using UnityEngine;
-using System.Collections;
-using UnityEngine.UI;
 
 public class Ball : MonoBehaviour {
 
     public float velocidade;
-    float movex, movey;
+    public Vector2 move;
     GameObject score1, score2;
 
     void Start () {
-        movex = -0.2f;
-        movey = -1;
-
         score1 = GameObject.Find("Score1");
         score2 = GameObject.Find("Score2");
+
+        move.x = 0.5f;
+        move.y = 0.5f;
+        move.Normalize();
     }
 	
-	void Update () {
-        transform.position += new Vector3(movex, movey, 0) * velocidade * Time.deltaTime;
+	void FixedUpdate () {
+        Movimentar();
     }
 
-    void OnTriggerEnter2D(Collider2D col)
+    void Movimentar()
     {
-        if (col.gameObject.tag == "Wall")
+        transform.Translate(new Vector2(move.x, move.y) * velocidade * Time.deltaTime);
+    }
+
+    void MudarDirecao(float x, float y)
+    {
+        move.x *= -x;
+        move.y *= -y;
+        move.Normalize();   //Mantém a magnitude (ângulo circular) do vetor como 1.
+    }
+
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        if (col.gameObject.tag == "Wall")       //Se bater em qualquer parede, chama a função de espelhar em y.
         {
-            movey *= -1;
+            move.y *= -1;
+            move.Normalize();
         }
-        if (col.gameObject.tag == "Player")
+        if (col.gameObject.tag == "Player")     //Se bater no jogador, chama a função de espelhar em x.
         {
-            movex *= -1;
+            move.x *= -1;
+            move.Normalize();
         }
-        if (col.gameObject.name == "Goal_left")
+        if (col.gameObject.name == "Goal_left") //Se bater no "gol" da esquerda, chamar a função de ToScore = pontuar
         {
             score2.GetComponent<Score>().ToScore();
             transform.position = new Vector3(0, 0, 0);
