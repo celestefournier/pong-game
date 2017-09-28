@@ -48,7 +48,7 @@ public class Ball : MonoBehaviour {
             score2.GetComponent<Score>().ToScore();
             transform.position = new Vector3(0, 0, 0);
         }
-        if (col.gameObject.name == "Goal_right")
+        if (col.gameObject.name == "Goal_right") // O mesmo acontece com o "gol" da direita
         {
             score1.GetComponent<Score>().ToScore();
             transform.position = new Vector3(0, 0, 0);
