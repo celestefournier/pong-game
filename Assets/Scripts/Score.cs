@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 
-public class Score : MonoBehaviour {
-
+public class Score : MonoBehaviour
+{
     int score;
-    
+
     public void ToScore()
     {
         score++;

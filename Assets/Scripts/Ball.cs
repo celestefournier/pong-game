@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
 
-public class Ball : MonoBehaviour {
-
+public class Ball : MonoBehaviour
+{
     public float velocidade;
     public Vector2 move;
     GameObject score1, score2;
 
-    void Start () {
+    void Start()
+    {
         score1 = GameObject.Find("Score1");
         score2 = GameObject.Find("Score2");
 
@@ -14,8 +15,9 @@ public class Ball : MonoBehaviour {
         move.y = 0.5f;
         move.Normalize();
     }
-	
-	void FixedUpdate () {
+
+    void FixedUpdate()
+    {
         Movimentar();
     }
 
@@ -28,17 +30,17 @@ public class Ball : MonoBehaviour {
     {
         move.x *= -x;
         move.y *= -y;
-        move.Normalize();   //Mantém a magnitude (ângulo circular) do vetor como 1.
+        move.Normalize(); //Mantém a magnitude (ângulo circular) do vetor como 1.
     }
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.gameObject.tag == "Wall")       //Se bater em qualquer parede, chama a função de espelhar em y.
+        if (col.gameObject.tag == "Wall") //Se bater em qualquer parede, chama a função de espelhar em y.
         {
             move.y *= -1;
             move.Normalize();
         }
-        if (col.gameObject.tag == "Player")     //Se bater no jogador, chama a função de espelhar em x.
+        if (col.gameObject.tag == "Player") //Se bater no jogador, chama a função de espelhar em x.
         {
             move.x *= -1;
             move.Normalize();
